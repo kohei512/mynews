@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 
 use App\Profiles;
 
+use App\Staff;
+use Carbon\Carbon;
+
+
+
 class ProfileController extends Controller
 
 {
@@ -64,14 +69,21 @@ class ProfileController extends Controller
      // Validationをかける
      $this->validate($request, Profiles::$rules);
      //  Modelからデータを取得する
-     $profile = Profiles::find($request->id);
+     $profile = Profiles::find($request->input('id'));
      // 送信されてきたフォームデータを格納する
      $profile_form = $request->all();
      unset($profile_form['_token']);
 
      // 該当するデータを上書きして保存する
      $profile->fill($profile_form)->save();
-    return redirect('admin/profile');
+
+
+     $staff = new Staff;
+     $staff->profiles_id = $profile->id;
+     $staff->edited_at = Carbon::now();
+     $staff->save();
+
+     return redirect('admin/profile/');
  }
 
     // 以下を追記

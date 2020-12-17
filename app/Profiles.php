@@ -16,4 +16,12 @@ class Profiles extends Model
         'hobby' => 'required',
         'introduction' => 'required',
     );
+
+    public function staff()
+    {
+        return $this->hasMany('App\Staff');
+
+    }
+
 }
+
