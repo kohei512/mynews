@@ -38,9 +38,10 @@ Route::group(['prefix' => 'admin' , 'middleware' => 'auth'], function() {
     Route::get('profile/delete', 'Admin\ProfileController@delete');
 
 
-
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', 'NewsController@index');
